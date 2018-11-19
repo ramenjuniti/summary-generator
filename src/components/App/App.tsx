@@ -19,7 +19,6 @@ class App extends React.Component<any, any> {
     this.props.form.validateFields((err: Error, values: FormData) => {
       if (!err) {
         this.postData(values)
-          // tslint:disable-next-line:no-console
           .then(data => this.setState({ result: data }))
           .catch(error => message.error(error));
       }
