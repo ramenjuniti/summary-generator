@@ -1,4 +1,5 @@
 import { Form, message } from "antd";
+import { FormComponentProps } from "antd/lib/form";
 import * as React from "react";
 import Header from "../Header";
 import Result from "../Result";
@@ -9,12 +10,22 @@ interface FormData {
   delimiter: string;
 }
 
-class App extends React.Component<any, any> {
+interface SentenceData {
+  id: number;
+  sentence: string;
+  score: number;
+}
+
+interface AppState {
+  result: SentenceData[] | null;
+}
+
+class App extends React.Component<FormComponentProps, AppState> {
   public state = {
     result: null
   };
 
-  public handleSubmit = (e: any) => {
+  public handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     this.props.form.validateFields((err: Error, values: FormData) => {
       if (!err) {

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const Result: React.SFC = (props: any) => {
+const Result: React.SFC = props => {
   return <React.Fragment>{JSON.stringify(props)}</React.Fragment>;
 };
 
