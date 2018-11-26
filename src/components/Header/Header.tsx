@@ -1,11 +1,7 @@
 import * as React from "react";
 
 const Header: React.SFC = () => {
-  return (
-    <header>
-      <h1>要約生成アプリ</h1>
-    </header>
-  );
+  return <h1>要約生成アプリ</h1>;
 };
 
 export default Header;

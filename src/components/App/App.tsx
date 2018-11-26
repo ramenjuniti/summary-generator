@@ -1,46 +1,88 @@
 import { Form, message } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import * as React from "react";
+
+import Forms from "../Forms";
 import Header from "../Header";
 import Result from "../Result";
-import TextForm from "../TextForm";
 
-interface FormData {
-  text: string;
-  delimiter: string;
-}
-
-interface SentenceData {
-  id: number;
-  sentence: string;
-  score: number;
-}
+import InputData from "../../types/InputData";
+import SentenceData from "../../types/SentenceData";
 
 interface AppState {
+  input: InputData;
   result: SentenceData[] | null;
+  showResultModal: boolean;
 }
 
+const api = process.env.REACT_APP_DEV_API_URL + "";
 class App extends React.Component<FormComponentProps, AppState> {
   public state = {
-    result: null
+    input: {
+      text: "",
+      maxLine: 0,
+      maxCharacter: 0,
+      threshold: 0.001,
+      tolerance: 0.0001,
+      damping: 0.85,
+      lambda: 1
+    },
+    result: null,
+    showResultModal: false
   };
 
-  public handleSubmit = (e: React.FormEvent) => {
+  public componentDidMount = () => {
+    // tslint:disable-next-line:no-console
+    const input = {
+      text: "",
+      delimiter: "",
+      maxLine: 0,
+      maxCharacter: 0,
+      threshold: 0.001,
+      tolerance: 0.0001,
+      damping: 0.85,
+      lambda: 1
+    };
+    this.setState({ input });
+  };
+
+  public onChange = () => {
+    const { getFieldValue } = this.props.form;
+    const input = {
+      text: getFieldValue("text"),
+      maxLine: getFieldValue("maxLine"),
+      maxCharacter: getFieldValue("maxCharacter"),
+      threshold: getFieldValue("threshold"),
+      tolerance: getFieldValue("tolerance"),
+      damping: getFieldValue("damping"),
+      lambda: getFieldValue("lambda")
+    };
+    // tslint:disable-next-line:no-console
+    console.log(input);
+    this.setState({ input });
+    // tslint:disable-next-line:no-console
+    console.log(this.state.input);
+  };
+
+  public handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.props.form.validateFields((err: Error, values: FormData) => {
-      if (!err) {
-        this.postData(values)
-          .then(data => this.setState({ result: data }))
-          .catch(error => message.error(error));
-      }
-    });
+    this.setState({ showResultModal: true });
+    this.postData()
+      .then(resultData => this.setState({ result: resultData }))
+      .catch(error => message.error(error.message));
   };
 
-  public postData = (data: FormData) => {
+  public postData = () => {
+    const { input } = this.state;
     const form = new FormData();
-    form.append("text", data.text);
-    form.append("delimiter", data.delimiter);
-    return fetch("https://summary-generator.appspot.com/", {
+    form.append("text", input.text);
+    form.append("maxLine", input.maxLine + "");
+    form.append("maxCharacter", input.maxCharacter + "");
+    form.append("threshold", input.threshold + "");
+    form.append("tolerance", input.tolerance + "");
+    form.append("damping", input.damping + "");
+    form.append("lambda", input.lambda + "");
+    return fetch(api, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -53,17 +95,28 @@ class App extends React.Component<FormComponentProps, AppState> {
     });
   };
 
+  public handleModalCansel = () => {
+    this.setState({ showResultModal: false });
+  };
+
   public render() {
-    const { result } = this.state;
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    const { result, showResultModal } = this.state;
     return (
-      <React.Fragment>
+      <div>
         <Header />
-        <TextForm
+        <Forms
+          onChange={this.onChange}
           handleSubmit={this.handleSubmit}
-          getFieldDecorator={this.props.form.getFieldDecorator}
+          setFieldsValue={setFieldsValue}
+          getFieldDecorator={getFieldDecorator}
         />
-        {result && <Result {...result} />}
-      </React.Fragment>
+        <Result
+          result={result}
+          showResultModal={showResultModal}
+          handleModalCansel={this.handleModalCansel}
+        />
+      </div>
     );
   }
 }
