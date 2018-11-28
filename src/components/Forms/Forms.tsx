@@ -1,134 +1,80 @@
-import { Button, Card, Form, Input, InputNumber, Slider } from "antd";
-import { GetFieldDecoratorOptions } from "antd/lib/form/Form";
+import { Button, Card, Collapse, Form, Tabs } from "antd";
 import * as React from "react";
 
-interface FormsProps {
-  onChange: () => void;
-  handleSubmit: (e: React.FormEvent) => void;
-  getFieldDecorator: <T extends {}>(
-    id: keyof T,
-    options?: GetFieldDecoratorOptions | undefined
-  ) => (node: React.ReactNode) => React.ReactNode;
-  setFieldsValue: (obj: {}) => void;
-}
+import DampingForm from "./DampingForm";
+import LambdaForm from "./LambdaForm";
+import MaxCharacterForm from "./MaxCharacterForm";
+import MaxLineForm from "./MaxLineForm";
+import TextForm from "./TextForm";
+import ThresholdForm from "./ThresholdForm";
+import ToleranceForm from "./ToleranceForm";
+
+import FormsProps from "../../types/props/FormsProps";
 
 const FormItem = Form.Item;
-const TextArea = Input.TextArea;
+const Panel = Collapse.Panel;
+const TabPane = Tabs.TabPane;
 
 const Forms = (props: FormsProps) => {
-  const { onChange, handleSubmit, getFieldDecorator } = props;
+  const {
+    hasErrors,
+    isFirstTouched,
+    handleSubmit,
+    getFieldDecorator,
+    getFieldsError
+  } = props;
   return (
     <Card>
-      <Form onSubmit={handleSubmit}>
-        <FormItem label="文書">
-          {getFieldDecorator("text", {
-            rules: [
-              {
-                message: "文書を入力してください",
-                required: true
-              }
-            ]
-          })(
-            <TextArea
-              placeholder="Please input text"
-              rows={5}
-              onChange={onChange}
+      <Form hideRequiredMark={true} onSubmit={handleSubmit}>
+        <TextForm
+          isFirstTouched={isFirstTouched}
+          getFieldDecorator={getFieldDecorator}
+        />
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="文数で要約" key="1" forceRender={true}>
+            <MaxLineForm
+              isFirstTouched={isFirstTouched}
+              getFieldDecorator={getFieldDecorator}
             />
-          )}
-        </FormItem>
-        <FormItem label="文の数">
-          {getFieldDecorator("maxLine", {
-            initialValue: 0,
-            rules: [
-              {
-                message: "文の数を入力してください",
-                required: true
-              }
-            ]
-          })(<InputNumber min={0} step={0} onChange={onChange} />)}
-        </FormItem>
-        <FormItem label="文字数">
-          {getFieldDecorator("maxCharacter", {
-            initialValue: 0,
-            rules: [
-              {
-                message: "文字数を入力してください",
-                required: true
-              }
-            ]
-          })(<InputNumber min={0} step={0} onChange={onChange} />)}
-        </FormItem>
-        <FormItem label="閾値">
-          {getFieldDecorator("threshold", {
-            initialValue: 0.001
-          })(<Slider min={0.0} max={1.0} step={0.001} onChange={onChange} />)}
-          {getFieldDecorator("threshold", {
-            initialValue: 0.001,
-            rules: [
-              {
-                message: "閾値を入力してください",
-                required: true
-              }
-            ]
-          })(
-            <InputNumber min={0.0} max={1.0} step={0.001} onChange={onChange} />
-          )}
-        </FormItem>
-        <FormItem label="許容誤差">
-          {getFieldDecorator("tolerance", {
-            initialValue: 0.0001
-          })(<Slider min={0.0} max={1.0} step={0.0001} onChange={onChange} />)}
-          {getFieldDecorator("tolerance", {
-            initialValue: 0.0001,
-            rules: [
-              {
-                message: "許容誤差を入力してください",
-                required: true
-              }
-            ]
-          })(
-            <InputNumber
-              min={0.0}
-              max={1.0}
-              step={0.0001}
-              onChange={onChange}
+          </TabPane>
+          <TabPane tab="文字数で要約" key="2" forceRender={true}>
+            <MaxCharacterForm
+              isFirstTouched={isFirstTouched}
+              getFieldDecorator={getFieldDecorator}
             />
-          )}
-        </FormItem>
-        <FormItem label="ダンピング・ファクター">
-          {getFieldDecorator("damping", {
-            initialValue: 0.85
-          })(<Slider min={0.0} max={1.0} step={0.01} onChange={onChange} />)}
-          {getFieldDecorator("damping", {
-            initialValue: 0.85,
-            rules: [
-              {
-                message: "ダンピング・ファクターを入力してください",
-                required: true
-              }
-            ]
-          })(
-            <InputNumber min={0.0} max={1.0} step={0.01} onChange={onChange} />
-          )}
-        </FormItem>
-        <FormItem label="λ">
-          {getFieldDecorator("lambda", {
-            initialValue: 1.0
-          })(<Slider min={0.0} max={1.0} step={0.001} onChange={onChange} />)}
-          {getFieldDecorator("lambda", {
-            initialValue: 1.0,
-            rules: [
-              {
-                message: "λを入力してください",
-                required: true
-              }
-            ]
-          })(
-            <InputNumber min={0.0} max={1.0} step={0.001} onChange={onChange} />
-          )}
-        </FormItem>
+          </TabPane>
+        </Tabs>
+        <Collapse bordered={false} accordion={true}>
+          <Panel
+            header="詳細設定"
+            key="1"
+            forceRender={true}
+            style={{ border: 0, marginBottom: "1.5em" }}
+          >
+            <ThresholdForm
+              isFirstTouched={isFirstTouched}
+              getFieldDecorator={getFieldDecorator}
+            />
+            <ToleranceForm
+              isFirstTouched={isFirstTouched}
+              getFieldDecorator={getFieldDecorator}
+            />
+            <DampingForm
+              isFirstTouched={isFirstTouched}
+              getFieldDecorator={getFieldDecorator}
+            />
+            <LambdaForm
+              isFirstTouched={isFirstTouched}
+              getFieldDecorator={getFieldDecorator}
+            />
+          </Panel>
+        </Collapse>
         <FormItem>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={hasErrors(getFieldsError())}
+          >
             要約する
           </Button>
         </FormItem>

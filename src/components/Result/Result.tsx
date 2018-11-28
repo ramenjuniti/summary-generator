@@ -1,13 +1,7 @@
 import { Modal, Spin } from "antd";
 import * as React from "react";
 
-import SentenceData from "../../types/SentenceData";
-
-interface ResultProps {
-  result: SentenceData[] | null;
-  showResultModal: boolean;
-  handleModalCansel: () => void;
-}
+import ResultProps from "../../types/props/ResultProps";
 
 const Result = (props: ResultProps) => {
   const { result, showResultModal, handleModalCansel } = props;

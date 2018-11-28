@@ -1,79 +1,51 @@
 import { Form, message } from "antd";
-import { FormComponentProps } from "antd/lib/form";
 import * as React from "react";
 
 import Forms from "../Forms";
 import Header from "../Header";
 import Result from "../Result";
 
-import InputData from "../../types/InputData";
-import SentenceData from "../../types/SentenceData";
-
-interface AppState {
-  input: InputData;
-  result: SentenceData[] | null;
-  showResultModal: boolean;
-}
+import InputData from "../../types/common/InputData";
+import AppProps from "../../types/props/AppProps";
+import AppState from "../../types/state/AppState";
 
 const api = process.env.REACT_APP_DEV_API_URL + "";
-class App extends React.Component<FormComponentProps, AppState> {
+class App extends React.Component<AppProps, AppState> {
   public state = {
-    input: {
-      text: "",
-      maxLine: 0,
-      maxCharacter: 0,
-      threshold: 0.001,
-      tolerance: 0.0001,
-      damping: 0.85,
-      lambda: 1
-    },
     result: null,
+    hasErrors: true,
     showResultModal: false
   };
 
-  public componentDidMount = () => {
-    // tslint:disable-next-line:no-console
-    const input = {
-      text: "",
-      delimiter: "",
-      maxLine: 0,
-      maxCharacter: 0,
-      threshold: 0.001,
-      tolerance: 0.0001,
-      damping: 0.85,
-      lambda: 1
-    };
-    this.setState({ input });
+  public componentDidMount() {
+    this.props.form.validateFields();
+  }
+
+  public hasErrors = (fieldsError: {}) => {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
   };
 
-  public onChange = () => {
-    const { getFieldValue } = this.props.form;
-    const input = {
-      text: getFieldValue("text"),
-      maxLine: getFieldValue("maxLine"),
-      maxCharacter: getFieldValue("maxCharacter"),
-      threshold: getFieldValue("threshold"),
-      tolerance: getFieldValue("tolerance"),
-      damping: getFieldValue("damping"),
-      lambda: getFieldValue("lambda")
-    };
-    // tslint:disable-next-line:no-console
-    console.log(input);
-    this.setState({ input });
-    // tslint:disable-next-line:no-console
-    console.log(this.state.input);
+  public isFirstTouched = (field: string) => {
+    const { isFieldTouched, getFieldError } = this.props.form;
+    return isFieldTouched(field) && getFieldError(field);
   };
 
   public handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    this.setState({ showResultModal: true });
-    this.postData()
-      .then(resultData => this.setState({ result: resultData }))
-      .catch(error => message.error(error.message));
+    this.setState({ result: null, showResultModal: true });
+
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.postData(values)
+          .then(resultData => this.setState({ result: resultData }))
+          .catch(error => message.error(error.message));
+      }
+    });
   };
 
-  public postData = () => {
-    const { input } = this.state;
+  public postData = (input: InputData) => {
+    // tslint:disable-next-line:no-console
+    console.log(input);
     const form = new FormData();
     form.append("text", input.text);
     form.append("maxLine", input.maxLine + "");
@@ -100,15 +72,16 @@ class App extends React.Component<FormComponentProps, AppState> {
   };
 
   public render() {
-    const { getFieldDecorator, setFieldsValue } = this.props.form;
+    const { getFieldDecorator, getFieldsError } = this.props.form;
     const { result, showResultModal } = this.state;
     return (
       <div>
         <Header />
         <Forms
-          onChange={this.onChange}
+          hasErrors={this.hasErrors}
           handleSubmit={this.handleSubmit}
-          setFieldsValue={setFieldsValue}
+          isFirstTouched={this.isFirstTouched}
+          getFieldsError={getFieldsError}
           getFieldDecorator={getFieldDecorator}
         />
         <Result
