@@ -11,7 +11,7 @@ import ToleranceForm from "./ToleranceForm";
 
 import FormsProps from "../../types/props/FormsProps";
 
-import "./Forms.css";
+import "./Forms.scss";
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
@@ -26,7 +26,7 @@ const Forms = (props: FormsProps) => {
     getFieldsError
   } = props;
   return (
-    <Card style={{ margin: "2em 3em 0 3em" }}>
+    <Card className="Forms">
       <Form hideRequiredMark={true} onSubmit={handleSubmit}>
         <TextForm
           isFirstTouched={isFirstTouched}

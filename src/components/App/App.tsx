@@ -2,16 +2,17 @@ import { Form, Layout, message } from "antd";
 import * as React from "react";
 
 import Forms from "../Forms";
-import Header from "../Header";
 import Result from "../Result";
 
 import InputData from "../../types/common/InputData";
 import AppProps from "../../types/props/AppProps";
 import AppState from "../../types/state/AppState";
 
-import "./App.css";
+import "./App.scss";
 
 const api = process.env.REACT_APP_DEV_API_URL + "";
+
+const { Header, Content, Footer } = Layout;
 
 class App extends React.Component<AppProps, AppState> {
   public state = {
@@ -75,11 +76,11 @@ class App extends React.Component<AppProps, AppState> {
     const { getFieldDecorator, getFieldsError } = this.props.form;
     const { result, showResultModal } = this.state;
     return (
-      <Layout>
-        <Layout.Header>
-          <Header />
-        </Layout.Header>
-        <Layout.Content className="App-Content">
+      <Layout className="App">
+        <Header className="App-Header">
+          <h1>ニュース要約</h1>
+        </Header>
+        <Content className="App-Content">
           <Forms
             hasErrors={this.hasErrors}
             handleSubmit={this.handleSubmit}
@@ -92,10 +93,10 @@ class App extends React.Component<AppProps, AppState> {
             showResultModal={showResultModal}
             handleModalCansel={this.handleModalCansel}
           />
-        </Layout.Content>
-        <Layout.Footer style={{ textAlign: "center" }}>
-          copyright ramenjuniti
-        </Layout.Footer>
+        </Content>
+        <Footer className="App-Footer">
+          <p>Summary Generator ©2018 Created by ramenjuniti</p>
+        </Footer>
       </Layout>
     );
   }
