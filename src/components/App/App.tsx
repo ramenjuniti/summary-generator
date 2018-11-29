@@ -1,4 +1,4 @@
-import { Form, message } from "antd";
+import { Form, Layout, message } from "antd";
 import * as React from "react";
 
 import Forms from "../Forms";
@@ -9,11 +9,13 @@ import InputData from "../../types/common/InputData";
 import AppProps from "../../types/props/AppProps";
 import AppState from "../../types/state/AppState";
 
+import "./App.css";
+
 const api = process.env.REACT_APP_DEV_API_URL + "";
+
 class App extends React.Component<AppProps, AppState> {
   public state = {
     result: null,
-    hasErrors: true,
     showResultModal: false
   };
 
@@ -44,8 +46,6 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   public postData = (input: InputData) => {
-    // tslint:disable-next-line:no-console
-    console.log(input);
     const form = new FormData();
     form.append("text", input.text);
     form.append("maxLine", input.maxLine + "");
@@ -75,21 +75,28 @@ class App extends React.Component<AppProps, AppState> {
     const { getFieldDecorator, getFieldsError } = this.props.form;
     const { result, showResultModal } = this.state;
     return (
-      <div>
-        <Header />
-        <Forms
-          hasErrors={this.hasErrors}
-          handleSubmit={this.handleSubmit}
-          isFirstTouched={this.isFirstTouched}
-          getFieldsError={getFieldsError}
-          getFieldDecorator={getFieldDecorator}
-        />
-        <Result
-          result={result}
-          showResultModal={showResultModal}
-          handleModalCansel={this.handleModalCansel}
-        />
-      </div>
+      <Layout>
+        <Layout.Header>
+          <Header />
+        </Layout.Header>
+        <Layout.Content className="App-Content">
+          <Forms
+            hasErrors={this.hasErrors}
+            handleSubmit={this.handleSubmit}
+            isFirstTouched={this.isFirstTouched}
+            getFieldsError={getFieldsError}
+            getFieldDecorator={getFieldDecorator}
+          />
+          <Result
+            result={result}
+            showResultModal={showResultModal}
+            handleModalCansel={this.handleModalCansel}
+          />
+        </Layout.Content>
+        <Layout.Footer style={{ textAlign: "center" }}>
+          copyright ramenjuniti
+        </Layout.Footer>
+      </Layout>
     );
   }
 }

@@ -1,7 +1,9 @@
 import * as React from "react";
 
-const Header: React.SFC = () => {
-  return <h1>要約生成アプリ</h1>;
+import "./Header.css";
+
+const Header = () => {
+  return <h1 className="Header-title">要約生成アプリ</h1>;
 };
 
 export default Header;
