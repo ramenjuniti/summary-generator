@@ -21,17 +21,17 @@ const ThresholdForm = (props: FormProps) => {
       help={isFirstTouched("threshold") || ""}
     >
       {getFieldDecorator("threshold", {
-        initialValue: 0.01
-      })(<Slider min={0.0} max={1.0} step={0.01} />)}
+        initialValue: 0.1
+      })(<Slider min={0.0} max={1.0} step={0.1} />)}
       {getFieldDecorator("threshold", {
-        initialValue: 0.01,
+        initialValue: 0.1,
         rules: [
           {
             message: "閾値を入力して下さい",
             required: true
           }
         ]
-      })(<InputNumber min={0.0} max={1.0} step={0.01} />)}
+      })(<InputNumber min={0.0} max={1.0} step={0.1} />)}
     </FormItem>
   );
 };

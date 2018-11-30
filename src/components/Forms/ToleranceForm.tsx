@@ -22,7 +22,7 @@ const ToleranceForm = (props: FormProps) => {
     >
       {getFieldDecorator("tolerance", {
         initialValue: 0.0001
-      })(<Slider min={0.0} max={1.0} step={0.0001} />)}
+      })(<Slider min={0.0} max={0.001} step={0.0001} />)}
       {getFieldDecorator("tolerance", {
         initialValue: 0.0001,
         rules: [
@@ -31,7 +31,7 @@ const ToleranceForm = (props: FormProps) => {
             required: true
           }
         ]
-      })(<InputNumber min={0.0} max={1.0} step={0.0001} />)}
+      })(<InputNumber min={0.0} max={0.001} step={0.0001} />)}
     </FormItem>
   );
 };
