@@ -1,4 +1,4 @@
-import { Form, Layout, message } from "antd";
+import { Col, Form, Layout, message, Row } from "antd";
 import * as React from "react";
 
 import Forms from "../Forms";
@@ -10,12 +10,13 @@ import AppState from "../../types/state/AppState";
 
 import "./App.scss";
 
-const api = process.env.REACT_APP_DEV_API_URL + "";
+const api = process.env.REACT_APP_PROD_API_URL + "";
 
 const { Header, Content, Footer } = Layout;
 
 class App extends React.Component<AppProps, AppState> {
   public state = {
+    requestLineSummary: true,
     result: null,
     showResultModal: false
   };
@@ -33,14 +34,23 @@ class App extends React.Component<AppProps, AppState> {
     return isFieldTouched(field) && getFieldError(field);
   };
 
+  public handleChangeTab = (key: string) => {
+    this.setState({ requestLineSummary: key === "文数" });
+  };
+
   public handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     this.setState({ result: null, showResultModal: true });
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.postData(values)
-          .then(resultData => this.setState({ result: resultData }))
+          .then(resultData =>
+            this.setState({
+              result: this.state.requestLineSummary
+                ? resultData.LineLimitedSummary
+                : resultData.CharacterLimitedSummary
+            })
+          )
           .catch(error => message.error(error.message));
       }
     });
@@ -80,20 +90,25 @@ class App extends React.Component<AppProps, AppState> {
         <Header className="App-Header">
           <h1>ニュース要約</h1>
         </Header>
-        <Content className="App-Content">
-          <Forms
-            hasErrors={this.hasErrors}
-            handleSubmit={this.handleSubmit}
-            isFirstTouched={this.isFirstTouched}
-            getFieldsError={getFieldsError}
-            getFieldDecorator={getFieldDecorator}
-          />
-          <Result
-            result={result}
-            showResultModal={showResultModal}
-            handleModalCansel={this.handleModalCansel}
-          />
-        </Content>
+        <Row type="flex" justify="center">
+          <Col xs={20} sm={16} md={12} lg={10} xl={8}>
+            <Content className="App-Content">
+              <Forms
+                handleChangeTab={this.handleChangeTab}
+                hasErrors={this.hasErrors}
+                handleSubmit={this.handleSubmit}
+                isFirstTouched={this.isFirstTouched}
+                getFieldsError={getFieldsError}
+                getFieldDecorator={getFieldDecorator}
+              />
+              <Result
+                result={result}
+                showResultModal={showResultModal}
+                handleModalCansel={this.handleModalCansel}
+              />
+            </Content>
+          </Col>
+        </Row>
         <Footer className="App-Footer">
           <p>Summary Generator ©2018 Created by ramenjuniti</p>
         </Footer>

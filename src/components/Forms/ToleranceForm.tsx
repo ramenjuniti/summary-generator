@@ -1,6 +1,8 @@
 import { Form, InputNumber, Slider } from "antd";
 import * as React from "react";
 
+import FormItemLabel from "./FormItemLabel";
+
 import FormProps from "../../types/props/FormProps";
 
 const FormItem = Form.Item;
@@ -9,7 +11,7 @@ const ToleranceForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label="許容誤差"
+      label={<FormItemLabel label="許容誤差" description="許容誤差でーす" />}
       validateStatus={isFirstTouched("tolerance") ? "error" : "success"}
       help={isFirstTouched("tolerance") || ""}
     >

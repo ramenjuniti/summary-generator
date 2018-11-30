@@ -9,7 +9,6 @@ const MaxCharacterForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label="文字数"
       validateStatus={isFirstTouched("maxCharacter") ? "error" : "success"}
       help={isFirstTouched("maxCharacter") || ""}
     >

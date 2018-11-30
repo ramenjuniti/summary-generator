@@ -1,6 +1,8 @@
 import { Form, InputNumber, Slider } from "antd";
 import * as React from "react";
 
+import FormItemLabel from "./FormItemLabel";
+
 import FormProps from "../../types/props/FormProps";
 
 const FormItem = Form.Item;
@@ -9,7 +11,12 @@ const DampingForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label="ダンピング・ファクター"
+      label={
+        <FormItemLabel
+          label="ダンピング・ファクター"
+          description="ダンピング・ファクターでーす"
+        />
+      }
       validateStatus={isFirstTouched("damping") ? "error" : "success"}
       help={isFirstTouched("damping") || ""}
     >

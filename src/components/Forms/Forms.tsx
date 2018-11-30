@@ -11,14 +11,13 @@ import ToleranceForm from "./ToleranceForm";
 
 import FormsProps from "../../types/props/FormsProps";
 
-import "./Forms.scss";
-
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 const TabPane = Tabs.TabPane;
 
 const Forms = (props: FormsProps) => {
   const {
+    handleChangeTab,
     hasErrors,
     isFirstTouched,
     handleSubmit,
@@ -32,14 +31,14 @@ const Forms = (props: FormsProps) => {
           isFirstTouched={isFirstTouched}
           getFieldDecorator={getFieldDecorator}
         />
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="文数で要約" key="1" forceRender={true}>
+        <Tabs defaultActiveKey="1" onChange={handleChangeTab}>
+          <TabPane tab="文数" key="文数" forceRender={true}>
             <MaxLineForm
               isFirstTouched={isFirstTouched}
               getFieldDecorator={getFieldDecorator}
             />
           </TabPane>
-          <TabPane tab="文字数で要約" key="2" forceRender={true}>
+          <TabPane tab="文字数" key="文字数" forceRender={true}>
             <MaxCharacterForm
               isFirstTouched={isFirstTouched}
               getFieldDecorator={getFieldDecorator}

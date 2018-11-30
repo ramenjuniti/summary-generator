@@ -1,5 +1,5 @@
 interface SentenceData {
-  id: number;
+  id: string;
   sentence: string;
   score: number;
 }

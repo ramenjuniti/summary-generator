@@ -1,6 +1,7 @@
 import { GetFieldDecoratorOptions } from "antd/lib/form/Form";
 
 interface FormsProps {
+  handleChangeTab: (key: string) => void;
   hasErrors: (fieldsError: {}) => boolean;
   isFirstTouched: (field: string) => false | {}[];
   handleSubmit: (e: React.FormEvent) => void;

@@ -1,6 +1,8 @@
 import { Form, InputNumber, Slider } from "antd";
 import * as React from "react";
 
+import FormItemLabel from "./FormItemLabel";
+
 import FormProps from "../../types/props/FormProps";
 
 const FormItem = Form.Item;
@@ -9,7 +11,7 @@ const LambdaForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label="λ"
+      label={<FormItemLabel label="λ" description="λでーす" />}
       validateStatus={isFirstTouched("lambda") ? "error" : "success"}
       help={isFirstTouched("lambda") || ""}
     >

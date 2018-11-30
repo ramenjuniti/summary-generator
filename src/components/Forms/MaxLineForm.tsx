@@ -9,7 +9,6 @@ const MaxLineForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label="文の数"
       validateStatus={isFirstTouched("maxLine") ? "error" : "success"}
       help={isFirstTouched("maxLine") || ""}
     >

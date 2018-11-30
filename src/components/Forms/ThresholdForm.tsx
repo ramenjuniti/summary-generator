@@ -1,6 +1,8 @@
 import { Form, InputNumber, Slider } from "antd";
 import * as React from "react";
 
+import FormItemLabel from "./FormItemLabel";
+
 import FormProps from "../../types/props/FormProps";
 
 const FormItem = Form.Item;
@@ -9,7 +11,7 @@ const ThresholdForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label="閾値"
+      label={<FormItemLabel label="閾値" description="閾値でーす" />}
       validateStatus={isFirstTouched("threshold") ? "error" : "success"}
       help={isFirstTouched("threshold") || ""}
     >

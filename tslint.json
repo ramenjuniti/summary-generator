@@ -10,6 +10,7 @@
   "rules": {
     "interface-name": false,
     "object-literal-sort-keys": false,
-    "array-type": [true, "array"]
+    "array-type": [true, "array"],
+    "jsx-no-lambda": false
   }
 }
