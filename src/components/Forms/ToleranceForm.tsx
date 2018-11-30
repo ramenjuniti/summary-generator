@@ -11,7 +11,12 @@ const ToleranceForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label={<FormItemLabel label="許容誤差" description="許容誤差でーす" />}
+      label={
+        <FormItemLabel
+          label="許容誤差"
+          description="数値が小さいほど正確な結果が得られますが、時間がかかります"
+        />
+      }
       validateStatus={isFirstTouched("tolerance") ? "error" : "success"}
       help={isFirstTouched("tolerance") || ""}
     >

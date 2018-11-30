@@ -11,7 +11,12 @@ const ThresholdForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label={<FormItemLabel label="閾値" description="閾値でーす" />}
+      label={
+        <FormItemLabel
+          label="閾値"
+          description="数値が大きいほど、他と文と類似度の高い文が要約に含まれます"
+        />
+      }
       validateStatus={isFirstTouched("threshold") ? "error" : "success"}
       help={isFirstTouched("threshold") || ""}
     >

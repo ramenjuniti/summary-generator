@@ -11,7 +11,12 @@ const LambdaForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      label={<FormItemLabel label="λ" description="λでーす" />}
+      label={
+        <FormItemLabel
+          label="λ"
+          description="数値が小さいほど、要約に多様性が出ます"
+        />
+      }
       validateStatus={isFirstTouched("lambda") ? "error" : "success"}
       help={isFirstTouched("lambda") || ""}
     >

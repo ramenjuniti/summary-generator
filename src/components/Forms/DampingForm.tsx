@@ -14,7 +14,7 @@ const DampingForm = (props: FormProps) => {
       label={
         <FormItemLabel
           label="ダンピング・ファクター"
-          description="ダンピング・ファクターでーす"
+          description="PageRankアルゴリズムのダンピング・ファクターです"
         />
       }
       validateStatus={isFirstTouched("damping") ? "error" : "success"}
