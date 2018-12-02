@@ -1,7 +1,7 @@
 interface InputData {
   text: string;
-  maxLine: number;
-  maxCharacter: number;
+  maxLines: number;
+  maxCharacters: number;
   threshold: number;
   tolerance: number;
   damping: number;

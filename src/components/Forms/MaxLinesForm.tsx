@@ -5,18 +5,18 @@ import FormProps from "../../types/props/FormProps";
 
 const FormItem = Form.Item;
 
-const MaxLineForm = (props: FormProps) => {
+const MaxLinesForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      validateStatus={isFirstTouched("maxLine") ? "error" : "success"}
-      help={isFirstTouched("maxLine") || ""}
+      validateStatus={isFirstTouched("maxLines") ? "error" : "success"}
+      help={isFirstTouched("maxLines") || ""}
     >
-      {getFieldDecorator("maxLine", {
+      {getFieldDecorator("maxLines", {
         initialValue: 0,
         rules: [
           {
-            message: "文の数を入力して下さい",
+            message: "文数を入力して下さい",
             required: true
           }
         ]
@@ -25,4 +25,4 @@ const MaxLineForm = (props: FormProps) => {
   );
 };
 
-export default MaxLineForm;
+export default MaxLinesForm;

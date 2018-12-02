@@ -5,14 +5,14 @@ import FormProps from "../../types/props/FormProps";
 
 const FormItem = Form.Item;
 
-const MaxCharacterForm = (props: FormProps) => {
+const MaxCharactersForm = (props: FormProps) => {
   const { isFirstTouched, getFieldDecorator } = props;
   return (
     <FormItem
-      validateStatus={isFirstTouched("maxCharacter") ? "error" : "success"}
-      help={isFirstTouched("maxCharacter") || ""}
+      validateStatus={isFirstTouched("maxCharacters") ? "error" : "success"}
+      help={isFirstTouched("maxCharacters") || ""}
     >
-      {getFieldDecorator("maxCharacter", {
+      {getFieldDecorator("maxCharacters", {
         initialValue: 0,
         rules: [
           {
@@ -25,4 +25,4 @@ const MaxCharacterForm = (props: FormProps) => {
   );
 };
 
-export default MaxCharacterForm;
+export default MaxCharactersForm;

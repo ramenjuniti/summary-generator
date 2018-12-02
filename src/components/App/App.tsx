@@ -59,8 +59,8 @@ class App extends React.Component<AppProps, AppState> {
   public postData = (input: InputData) => {
     const form = new FormData();
     form.append("text", input.text);
-    form.append("maxLine", input.maxLine + "");
-    form.append("maxCharacter", input.maxCharacter + "");
+    form.append("maxLines", input.maxLines + "");
+    form.append("maxCharacters", input.maxCharacters + "");
     form.append("threshold", input.threshold + "");
     form.append("tolerance", input.tolerance + "");
     form.append("damping", input.damping + "");

@@ -3,8 +3,8 @@ import * as React from "react";
 
 import DampingForm from "./DampingForm";
 import LambdaForm from "./LambdaForm";
-import MaxCharacterForm from "./MaxCharacterForm";
-import MaxLineForm from "./MaxLineForm";
+import MaxCharactersForm from "./MaxCharactersForm";
+import MaxLinesForm from "./MaxLinesForm";
 import TextForm from "./TextForm";
 import ThresholdForm from "./ThresholdForm";
 import ToleranceForm from "./ToleranceForm";
@@ -33,13 +33,13 @@ const Forms = (props: FormsProps) => {
         />
         <Tabs defaultActiveKey="1" onChange={handleChangeTab}>
           <TabPane tab="文数" key="文数" forceRender={true}>
-            <MaxLineForm
+            <MaxLinesForm
               isFirstTouched={isFirstTouched}
               getFieldDecorator={getFieldDecorator}
             />
           </TabPane>
           <TabPane tab="文字数" key="文字数" forceRender={true}>
-            <MaxCharacterForm
+            <MaxCharactersForm
               isFirstTouched={isFirstTouched}
               getFieldDecorator={getFieldDecorator}
             />
