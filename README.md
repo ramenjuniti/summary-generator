@@ -2,8 +2,6 @@
 
 https://ramenjuniti.github.io/summary-generator
 
-## Overview
-
 This is a web application that summarizes input Japanese documents.
 
 ## Algorithm
