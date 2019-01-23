@@ -12,5 +12,6 @@ https://github.com/ramenjuniti/lexrank-mmr
 
 https://github.com/ramenjuniti/summary-generator-api
 
+## License
 
-
+This software is released under the MIT License, see LICENSE.
