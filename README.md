@@ -1,4 +1,4 @@
-# Summary Generator
+# [Summary Generator](https://ramenjuniti.github.io/summary-generator)
 
 This is a web application that summarizes input Japanese documents.
 
