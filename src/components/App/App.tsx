@@ -88,7 +88,7 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <Layout className="App">
         <Header className="App-Header">
-          <h1>要約生成</h1>
+          <h1>Summary Generator</h1>
         </Header>
         <Row type="flex" justify="center">
           <Col xs={20} sm={16} md={12} lg={10} xl={8}>
